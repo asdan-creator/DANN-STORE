@@ -1,0 +1,3636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DANN STORE - Premium Game Topup Center</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Swiper Slider -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <style>
+        /* ===== RESET & VARIABLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00ff88;
+            --primary-dark: #00cc66;
+            --secondary: #00b8ff;
+            --accent: #ff3366;
+            --dark: #0a0a0f;
+            --dark-light: #1a1a24;
+            --dark-lighter: #2a2a35;
+            --text: #ffffff;
+            --text-muted: #a0a0b0;
+            --border: rgba(255,255,255,0.1);
+            --gradient-1: linear-gradient(135deg, #00ff88, #00b8ff);
+            --gradient-2: linear-gradient(135deg, #ff3366, #ff00aa);
+            --gradient-3: linear-gradient(135deg, #ff8800, #ff3300);
+            --gradient-4: linear-gradient(135deg, #ffd700, #ffaa00);
+            --gradient-5: linear-gradient(135deg, #9933ff, #6600cc);
+            --gradient-6: linear-gradient(135deg, #00cc99, #0066ff);
+            --shadow: 0 20px 40px rgba(0,0,0,0.4);
+            --shadow-glow: 0 0 30px rgba(0,255,136,0.3);
+        }
+
+        body {
+            background: var(--dark);
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+
+        /* ===== CUSTOM SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-light);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient-1);
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #00ff88, #00cc66);
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0,255,136,0.3); }
+            50% { box-shadow: 0 0 40px rgba(0,255,136,0.5); }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        /* ===== LOADING SCREEN ===== */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s;
+        }
+
+        .loading-screen.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-content {
+            text-align: center;
+        }
+
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 2rem;
+            border: 4px solid var(--border);
+            border-top-color: var(--primary);
+            border-right-color: var(--secondary);
+            border-radius: 50%;
+            animation: rotate 1s infinite linear;
+        }
+
+        .loading-text {
+            font-size: 1.5rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .loading-progress {
+            width: 300px;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            margin-top: 2rem;
+            overflow: hidden;
+        }
+
+        .loading-progress-bar {
+            width: 0%;
+            height: 100%;
+            background: var(--gradient-1);
+            transition: width 0.3s;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10,10,15,0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: 0.3s;
+        }
+
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            background: rgba(10,10,15,0.98);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50%;
+            height: 2px;
+            background: var(--gradient-1);
+            transition: 0.3s;
+        }
+
+        .logo:hover::after {
+            width: 100%;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-1);
+            transition: 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+        }
+
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+
+        .cart-icon:hover {
+            background: rgba(0,255,136,0.1);
+            transform: scale(1.1);
+        }
+
+        .cart-icon i {
+            font-size: 1.3rem;
+            color: var(--primary);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--gradient-2);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s infinite;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 50%, rgba(0,255,136,0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(0,184,255,0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .hero-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 3s infinite;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            animation: glow 2s infinite;
+        }
+
+        .hero-title {
+            font-size: 5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title span {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            animation: float 3s infinite;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            padding: 2rem 3rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: var(--dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: translateY(-2px);
+        }
+
+        /* ===== CONTACT INFO BAR ===== */
+        .contact-bar {
+            background: var(--dark-light);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+        }
+
+        .contact-bar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-bar-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            transition: 0.3s;
+        }
+
+        .contact-bar-item:hover {
+            color: var(--primary);
+        }
+
+        .contact-bar-item i {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .contact-bar-item a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .contact-bar-item a:hover {
+            color: var(--primary);
+        }
+
+        /* ===== ABOUT SECTION ===== */
+        .about-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(to bottom, var(--dark), var(--dark-light));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgdmlld0JveD0iMCAwIDYwIDYwIj48cGF0aCBkPSJNMzAgMTBhMjAgMjAgMCAwIDEgMjAgMjAgMjAgMjAgMCAwIDEtNDAgMCAyMCAyMCAwIDAgMSAyMC0yMHoiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgwLDI1NSwxMzYsMC4xKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+');
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-title span {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-card {
+            padding: 3rem 2rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            text-align: center;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-1);
+            opacity: 0;
+            transition: 0.3s;
+            z-index: -1;
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+        }
+
+        .about-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .about-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 2rem;
+            background: rgba(0,255,136,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary);
+            transition: 0.3s;
+        }
+
+        .about-card:hover .about-icon {
+            transform: scale(1.1) rotate(360deg);
+            background: var(--primary);
+            color: var(--dark);
+        }
+
+        .about-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-card p {
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        /* ===== HOW TO ORDER SECTION ===== */
+        .howto-section {
+            padding: 6rem 2rem;
+            background: var(--dark);
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .step-card {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 2rem;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-number::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            opacity: 0.3;
+            z-index: -1;
+            animation: pulse 2s infinite;
+        }
+
+        .step-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .step-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .step-card p {
+            color: var(--text-muted);
+        }
+
+        .step-connector {
+            position: absolute;
+            top: 30px;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+        }
+
+        /* ===== GAME SELECTOR ===== */
+        .game-section {
+            padding: 4rem 2rem;
+        }
+
+        .game-selector {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .game-btn {
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            background: rgba(255,255,255,0.02);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .game-btn i {
+            font-size: 1.3rem;
+        }
+
+        .game-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .game-btn.active {
+            background: var(--gradient-1);
+            color: var(--dark);
+            border: none;
+            transform: scale(1.05);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .game-btn.ml.active { background: var(--gradient-2); }
+        .game-btn.ff.active { background: var(--gradient-3); }
+        .game-btn.pubg.active { background: var(--gradient-4); }
+        .game-btn.valo.active { background: var(--gradient-5); }
+        .game-btn.cod.active { background: var(--gradient-6); }
+
+        /* ===== PRODUCTS GRID ===== */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .product-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            overflow: hidden;
+            transition: 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--gradient-2);
+            border-radius: 50px;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 1;
+        }
+
+        .product-image {
+            height: 250px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-image.ml { background: var(--gradient-2); }
+        .product-image.ff { background: var(--gradient-3); }
+        .product-image.pubg { background: var(--gradient-4); }
+        .product-image.valo { background: var(--gradient-5); }
+        .product-image.cod { background: var(--gradient-6); }
+
+        .product-image i {
+            font-size: 6rem;
+            color: rgba(255,255,255,0.3);
+            transform: rotate(-10deg);
+            transition: 0.5s;
+        }
+
+        .product-card:hover .product-image i {
+            transform: rotate(0deg) scale(1.1);
+            color: rgba(255,255,255,0.5);
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--gradient-2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            z-index: 1;
+        }
+
+        .product-content {
+            padding: 2rem;
+        }
+
+        .product-category {
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .product-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .product-desc i {
+            color: var(--primary);
+            margin-right: 0.5rem;
+            font-size: 0.7rem;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .current-price {
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .original-price {
+            font-size: 1rem;
+            color: #666;
+            text-decoration: line-through;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .rating {
+            color: #ffd700;
+        }
+
+        .rating span {
+            color: var(--text-muted);
+            margin-left: 0.5rem;
+        }
+
+        .sold {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .sold i {
+            color: var(--primary);
+            margin-right: 0.3rem;
+        }
+
+        .product-btn {
+            width: 100%;
+            padding: 1rem;
+            background: transparent;
+            border: 2px solid var(--primary);
+            border-radius: 15px;
+            color: var(--primary);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .product-btn:hover {
+            background: var(--primary);
+            color: var(--dark);
+        }
+
+        /* ===== FEATURES SECTION ===== */
+        .features-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(to bottom, var(--dark-light), var(--dark));
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1.5rem;
+            background: rgba(0,255,136,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--primary);
+            transition: 0.3s;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(360deg);
+            background: var(--primary);
+            color: var(--dark);
+        }
+
+        .feature-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* ===== TESTIMONIALS SLIDER ===== */
+        .testimonials-section {
+            padding: 6rem 2rem;
+            background: var(--dark);
+        }
+
+        .testimonials-slider {
+            max-width: 1000px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .testimonial-slide {
+            padding: 2rem;
+        }
+
+        .testimonial-card {
+            padding: 2rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .testimonial-rating {
+            color: #ffd700;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-text {
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .author-info h4 {
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .author-info p {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .swiper-pagination-bullet {
+            background: var(--primary);
+        }
+
+        /* ===== FAQ SECTION ===== */
+        .faq-section {
+            padding: 6rem 2rem;
+            background: var(--dark-light);
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            padding: 2rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .faq-item:hover {
+            border-color: var(--primary);
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .faq-question i {
+            color: var(--primary);
+            transition: 0.3s;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: 0.3s;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            margin-top: 1rem;
+        }
+
+        /* ===== CONTACT SECTION ===== */
+        .contact-section {
+            padding: 6rem 2rem;
+            background: var(--dark);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-info h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info p {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .contact-details {
+            margin-bottom: 2rem;
+        }
+
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .contact-detail:hover {
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .contact-detail i {
+            width: 40px;
+            height: 40px;
+            background: rgba(0,255,136,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .contact-detail a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .contact-detail a:hover {
+            color: var(--primary);
+        }
+
+        .contact-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .contact-social a {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: 0.3s;
+        }
+
+        .contact-social a:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .contact-form {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--dark-light);
+            padding: 4rem 2rem 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 3rem;
+        }
+
+        .footer-about h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-about p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: 0.3s;
+        }
+
+        .footer-social a:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .footer-newsletter p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 0.8rem;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            color: var(--text);
+        }
+
+        .newsletter-form button {
+            padding: 0.8rem 1.5rem;
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 5px;
+            color: var(--dark);
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .newsletter-form button:hover {
+            transform: scale(1.05);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom i {
+            color: var(--accent);
+            animation: pulse 1s infinite;
+        }
+
+        /* ===== MODALS ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-container {
+            background: var(--dark-light);
+            border-radius: 30px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            animation: slideIn 0.3s;
+        }
+
+        .modal-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: var(--dark-light);
+            z-index: 1;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .modal-close {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255,51,102,0.2);
+            transform: rotate(90deg);
+        }
+
+        .modal-close i {
+            color: var(--accent);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        /* ===== CART ITEMS ===== */
+        .cart-items {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            transition: 0.3s;
+        }
+
+        .cart-item:hover {
+            border-color: var(--primary);
+        }
+
+        .cart-item-info h4 {
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .cart-item-info p {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .cart-item-price {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .cart-item-remove {
+            color: var(--accent);
+            cursor: pointer;
+            margin-left: 1rem;
+            transition: 0.3s;
+        }
+
+        .cart-item-remove:hover {
+            transform: scale(1.2);
+        }
+
+        .cart-total {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--border);
+        }
+
+        .cart-total-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .cart-total-row span:last-child {
+            color: var(--primary);
+        }
+
+        /* ===== CHECKOUT FORM ===== */
+        .checkout-form {
+            margin-top: 1rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .payment-method {
+            padding: 1rem;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .payment-method:hover {
+            border-color: var(--primary);
+        }
+
+        .payment-method.selected {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: var(--dark);
+        }
+
+        .payment-method i {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-method span {
+            display: block;
+            font-size: 0.8rem;
+        }
+
+        /* ===== RECEIPT ===== */
+        .receipt {
+            padding: 1rem;
+        }
+
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .receipt-header h3 {
+            font-size: 2rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .receipt-details {
+            background: rgba(0,0,0,0.3);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .receipt-row:last-child {
+            border-bottom: none;
+        }
+
+        .receipt-label {
+            color: var(--text-muted);
+        }
+
+        .receipt-value {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .receipt-footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--dark-light);
+            border: 1px solid var(--border);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transform: translateX(400px);
+            transition: 0.3s;
+            z-index: 3000;
+            box-shadow: var(--shadow);
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .toast.error i {
+            color: var(--accent);
+        }
+
+        /* ===== BACK TO TOP ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            z-index: 1000;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: scale(1.1);
+        }
+
+        /* ===== WHATSAPP FLOAT ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 10px 20px rgba(37,211,102,0.3);
+            transition: 0.3s;
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1200px) {
+            .about-grid,
+            .features-grid,
+            .steps-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+            
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .about-grid,
+            .testimonials-grid,
+            .features-grid,
+            .steps-grid,
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .payment-methods {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .contact-bar-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">DANN STORE</div>
+            <div class="loading-progress">
+                <div class="loading-progress-bar" id="loadingProgress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top -->
+    <div class="back-to-top" id="backToTop" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/6289616331000" target="_blank" class="whatsapp-float">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Berhasil ditambahkan ke keranjang</span>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo" onclick="scrollToTop()">DANN STORE</div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#products" class="nav-link">Products</a>
+                <a href="#howto" class="nav-link">How to Order</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="cart-icon" onclick="openCart()">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-badge" id="cartCount">0</span>
+            </div>
+            <div class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Bar -->
+    <div class="contact-bar">
+        <div class="contact-bar-container">
+            <div class="contact-bar-item">
+                <i class="fab fa-whatsapp"></i>
+                <a href="https://wa.me/6289616331000" target="_blank">+62 896-1633-1000</a>
+            </div>
+            <div class="contact-bar-item">
+                <i class="far fa-envelope"></i>
+                <a href="mailto:d39349303@gmail.com">d39349303@gmail.com</a>
+            </div>
+            <div class="contact-bar-item">
+                <i class="fab fa-instagram"></i>
+                <a href="https://instagram.com/dan.azdn" target="_blank">@dan.azdn</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-particles" id="heroParticles"></div>
+        <div class="hero-content" data-aos="fade-up">
+            <div class="hero-badge">🔥 PREMIUM GAME STORE 🔥</div>
+            <h1 class="hero-title">Selamat Datang di <span>DANN STORE</span></h1>
+            <p class="hero-subtitle">Top up game termurah & tercepat • 5 Menit Proses • 100% Aman • 24/7 Support</p>
+            <div class="hero-stats">
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stat-number">50K+</div>
+                    <div class="stat-label">Happy Customer</div>
+                </div>
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-number">100K+</div>
+                    <div class="stat-label">Transactions</div>
+                </div>
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-number">5⭐</div>
+                    <div class="stat-label">Rating</div>
+                </div>
+            </div>
+            <div class="hero-cta">
+                <a href="#products" class="btn btn-primary">
+                    <i class="fas fa-shopping-bag"></i> Beli Sekarang
+                </a>
+                <a href="#howto" class="btn btn-outline">
+                    <i class="fas fa-info-circle"></i> Cara Order
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="about-bg"></div>
+        <div class="section-header" data-aos="fade-up">
+            <div class="section-badge">TENTANG KAMI</div>
+            <h2 class="section-title">Kenapa Pilih <span>DANN STORE?</span></h2>
+            <p class="section-subtitle">Kami hadir untuk memudahkan top up game kamu dengan pelayanan terbaik</p>
+        </div>
+
+        <div class="about-grid">
+            <div class="about-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="about-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3>Proses Super Cepat</h3>
+                <p>Top up langsung masuk dalam hitungan menit. Kami menggunakan sistem otomatis tercepat.</p>
+            </div>
+            <div class="about-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="about-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>100% Aman & Terpercaya</h3>
+                <p>Data kamu terenkripsi dan aman. Sudah dipercaya 50.000+ customer.</p>
+            </div>
+            <div class="about-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="about-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3>Customer Service 24/7</h3>
+                <p>Tim support kami selalu siap membantu kapanpun kamu butuh.</p>
+            </div>
+            <div class="about-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="about-icon">
+                    <i class="fas fa-wallet"></i>
+                </div>
+                <h3>Banyak Metode Pembayaran</h3>
+                <p>BCA, BRI, Mandiri, DANA, OVO, GoPay, Alfamart, Indomaret.</p>
+            </div>
+            <div class="about-card" data-aos="fade-up" data-aos-delay="500">
+                <div class="about-icon">
+                    <i class="fas fa-gem"></i>
+                </div>
+                <h3>Harga Termurah</h3>
+                <p>Kami selalu memberikan harga terbaik dengan banyak promo menarik.</p>
+            </div>
+            <div class="about-card" data-aos="fade-up" data-aos-delay="600">
+                <div class="about-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <h3>Bonus & Hadiah</h3>
+                <p>Dapatkan bonus diamond dan hadiah menarik setiap pembelian.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Order Section -->
+    <section id="howto" class="howto-section">
+        <div class="section-header" data-aos="fade-up">
+            <div class="section-badge">PANDUAN</div>
+            <h2 class="section-title">Cara <span>Order</span></h2>
+            <p class="section-subtitle">Ikuti langkah-langkah mudah berikut untuk top up game</p>
+        </div>
+
+        <div class="steps-grid">
+            <div class="step-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="step-number">1</div>
+                <div class="step-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h3>Pilih Game</h3>
+                <p>Pilih game yang ingin kamu top up (Mobile Legends / Free Fire / PUBG / Valorant / COD)</p>
+            </div>
+            <div class="step-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="step-number">2</div>
+                <div class="step-icon">
+                    <i class="fas fa-cubes"></i>
+                </div>
+                <h3>Pilih Nominal</h3>
+                <p>Pilih jumlah diamond atau item yang kamu inginkan</p>
+                <div class="step-connector"></div>
+            </div>
+            <div class="step-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="step-number">3</div>
+                <div class="step-icon">
+                    <i class="fas fa-edit"></i>
+                </div>
+                <h3>Isi Form</h3>
+                <p>Masukkan ID game dan pilih metode pembayaran</p>
+                <div class="step-connector"></div>
+            </div>
+            <div class="step-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="step-number">4</div>
+                <div class="step-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>Selesai</h3>
+                <p>Lakukan pembayaran dan diamond akan masuk otomatis</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="game-section">
+        <div class="section-header" data-aos="fade-up">
+            <div class="section-badge">PRODUCTS</div>
+            <h2 class="section-title">Pilihan <span>Game</span></h2>
+            <p class="section-subtitle">Tersedia berbagai pilihan game dengan harga termurah</p>
+        </div>
+
+        <div class="game-selector">
+            <button class="game-btn ml active" onclick="switchGame('ml')">
+                <i class="fas fa-crown"></i> Mobile Legends
+            </button>
+            <button class="game-btn ff" onclick="switchGame('ff')">
+                <i class="fas fa-fire"></i> Free Fire
+            </button>
+            <button class="game-btn pubg" onclick="switchGame('pubg')">
+                <i class="fas fa-crosshairs"></i> PUBG Mobile
+            </button>
+            <button class="game-btn valo" onclick="switchGame('valo')">
+                <i class="fas fa-skull"></i> Valorant
+            </button>
+            <button class="game-btn cod" onclick="switchGame('cod')">
+                <i class="fas fa-bomb"></i> Call of Duty
+            </button>
+        </div>
+
+        <!-- ML Products -->
+        <div id="mlProducts">
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="product-badge">BEST SELLER</div>
+                    <div class="product-image ml">
+                        <i class="fas fa-crown"></i>
+                        <span class="discount-badge">-20%</span>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">MOBILE LEGENDS</div>
+                        <div class="product-name">Diamond 100</div>
+                        <div class="product-desc">
+                            <i class="fas fa-check-circle"></i> 100 Diamond + 5 Bonus<br>
+                            <i class="fas fa-check-circle"></i> Instant Delivery<br>
+                            <i class="fas fa-check-circle"></i> 100% Original
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 12.000</span>
+                            <span class="original-price">Rp 15.000</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.8 (1.2rb)</span>
+                            </div>
+                            <div class="sold">
+                                <i class="fas fa-shopping-bag"></i> 1.2rb terjual
+                            </div>
+                        </div>
+                        <button class="product-btn" onclick="openBuyModal('ml', 'Diamond 100', 15000, 12000, 'ml', event)">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="product-image ml">
+                        <i class="fas fa-crown"></i>
+                        <span class="discount-badge">-7%</span>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">MOBILE LEGENDS</div>
+                        <div class="product-name">Diamond 500</div>
+                        <div class="product-desc">
+                            <i class="fas fa-check-circle"></i> 500 Diamond + 20 Bonus<br>
+                            <i class="fas fa-check-circle"></i> 1x Lucky Spin<br>
+                            <i class="fas fa-check-circle"></i> Instant Delivery
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 65.000</span>
+                            <span class="original-price">Rp 70.000</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>5.0 (3.5rb)</span>
+                            </div>
+                            <div class="sold">
+                                <i class="fas fa-shopping-bag"></i> 3.5rb terjual
+                            </div>
+                        </div>
+                        <button class="product-btn" onclick="openBuyModal('ml', 'Diamond 500', 70000, 65000, 'ml', event)">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="product-image ml">
+                        <i class="fas fa-crown"></i>
+                        <span class="discount-badge">-7%</span>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">MOBILE LEGENDS</div>
+                        <div class="product-name">Diamond 1000</div>
+                        <div class="product-desc">
+                            <i class="fas fa-check-circle"></i> 1000 Diamond + 50 Bonus<br>
+                            <i class="fas fa-check-circle"></i> 1x Starlight Pass<br>
+                            <i class="fas fa-check-circle"></i> Priority Delivery
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 125.000</span>
+                            <span class="original-price">Rp 135.000</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.9 (5.1rb)</span>
+                            </div>
+                            <div class="sold">
+                                <i class="fas fa-shopping-bag"></i> 5.1rb terjual
+                            </div>
+                        </div>
+                        <button class="product-btn" onclick="openBuyModal('ml', 'Diamond 1000', 135000, 125000, 'ml', event)">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="product-image ml">
+                        <i class="fas fa-star"></i>
+                        <span class="discount-badge">-6%</span>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">MOBILE LEGENDS</div>
+                        <div class="product-name">Starlight Member</div>
+                        <div class="product-desc">
+                            <i class="fas fa-check-circle"></i> 30 Days Starlight<br>
+                            <i class="fas fa-check-circle"></i> Exclusive Skin<br>
+                            <i class="fas fa-check-circle"></i> 100 Diamond Bonus
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 80.000</span>
+                            <span class="original-price">Rp 85.000</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>5.0 (2.8rb)</span>
+                            </div>
+                            <div class="sold">
+                                <i class="fas fa-shopping-bag"></i> 2.8rb terjual
+                            </div>
+                        </div>
+                        <button class="product-btn" onclick="openBuyModal('ml', 'Starlight Member', 85000, 80000, 'ml', event)">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="product-badge">LIMITED</div>
+                    <div class="product-image ml">
+                        <i class="fas fa-crown"></i>
+                        <span class="discount-badge">-10%</span>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">MOBILE LEGENDS</div>
+                        <div class="product-name">Diamond 2500</div>
+                        <div class="product-desc">
+                            <i class="fas fa-check-circle"></i> 2500 Diamond + 150 Bonus<br>
+                            <i class="fas fa-check-circle"></i> 2x Lucky Spin<br>
+                            <i class="fas fa-check-circle"></i> Free Skin
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 300.000</span>
+                            <span class="original-price">Rp 335.000</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>5.0 (1.5rb)</span>
+                            </div>
+                            <div class="sold">
+                                <i class="fas fa-shopping-bag"></i> 1.5rb terjual
+                            </div>
+                        </div>
+                        <button class="product-btn" onclick="openBuyModal('ml', 'Diamond 2500', 335000, 300000, 'ml', event)">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="product-image ml">
+                        <i class="fas fa-crown"></i>
+                        <span class="discount-badge">-5%</span>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">MOBILE LEGENDS</div>
+                        <div class="product-name">Diamond 5000</div>
+                        <div class="product-desc">
+                            <i class="fas fa-check-circle"></i> 5000 Diamond + 300 Bonus<br>
+                            <i class="fas fa-check-circle"></i> 3x Lucky Spin<br>
+                            <i class="fas fa-check-circle"></i> Exclusive Border
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 590.000</span>
+                            <span class="original-price">Rp 620.000</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.9 (800)</span>
+                            </div>
+                            <div class="sold">
+                                <i class="fas fa-shopping-bag"></i> 800 terjual
+                            </div>
+                        </div>
+                        <button class="product-btn" onclick="openBuyModal('ml', 'Diamond 5000', 620000, 590000, 'ml', event)">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FF Products -->
+        <div id="ffProducts" style="display: none;">
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="product-badge">HOT</div>
+                    <div class="product-image ff">
+                        <i class="fas fa-fire"></i>
+                        <span class="discount-badge">-17%</span>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">FREE FIRE</div>
+                        <div class="product-name">Diamond 100</div>
+                        <div class="product-desc">
+                            <i class="fas fa-check-circle"></i> 100 Diamond + 5 Bonus<br>
+                            <i class="fas fa-check-circle"></i> Instant Delivery<br>
+                            <i class="fas fa-check-circle"></i> 100% Original
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 10.000</span>
+                            <span class="original-price">Rp 12.000</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>5.0 (2.1rb)</span>
+                            </div>
+                            <div class="sold">
+                                <i class="fas fa-shopping-bag"></i> 2.1rb terjual
+                            </div>
+                        </div>
+                        <button class="product-btn" onclick="openBuyModal('ff', 'Diamond 100', 12000, 10000, 'ff', event)">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="product-image ff">
+                        <i class="fas fa-fire"></i>
+                        <span class="discount-badge">-7%</span>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">FREE FIRE</div>
+                        <div class="product-name">Diamond 500</div>
+                        <div class="product-desc">
+                            <i class="fas fa-check-circle"></i> 500 Diamond + 20 Bonus<br>
+                            <i class="fas fa-check-circle"></i> 1x Elite Pass<br>
+                            <i class="fas fa-check-circle"></i> Instant Delivery
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 54.000</span>
+                            <span class="original-price">Rp 58.000</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.8 (4.3rb)</span>
+                            </div>
+                            <div class="sold">
+                                <i class="fas fa-shopping-bag"></i> 4.3rb terjual
+                            </div>
+                        </div>
+                        <button class="product-btn" onclick="openBuyModal('ff', 'Diamond 500', 58000, 54000, 'ff', event)">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="product-badge">POPULAR</div>
+                    <div class="product-image ff">
+                        <i class="fas fa-fire"></i>
+                        <span class="discount-badge">-6%</span>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">FREE FIRE</div>
+                        <div class="product-name">Diamond 1000</div>
+                        <div class="product-desc">
+                            <i class="fas fa-check-circle"></i> 1000 Diamond + 100 Bonus<br>
+                            <i class="fas fa-check-circle"></i> 1x Voucher Skin<br>
+                            <i class="fas fa-check-circle"></i> Priority Delivery
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 105.000</span>
+                            <span class="original-price">Rp 112.000</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>5.0 (6.7rb)</span>
+                            </div>
+                            <div class="sold">
+                                <i class="fas fa-shopping-bag"></i> 6.7rb terjual
+                            </div>
+                        </div>
+                        <button class="product-btn" onclick="openBuyModal('ff', 'Diamond 1000', 112000, 105000, 'ff', event)">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="product-image ff">
+                        <i class="fas fa-star"></i>
+                        <span class="discount-badge">-8%</span>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">FREE FIRE</div>
+                        <div class="product-name">Membership</div>
+                        <div class="product-desc">
+                            <i class="fas fa-check-circle"></i> 30 Days Membership<br>
+                            <i class="fas fa-check-circle"></i> 100 Diamond Bonus<br>
+                            <i class="fas fa-check-circle"></i> Exclusive Skin
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 60.000</span>
+                            <span class="original-price">Rp 65.000</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.9 (3.2rb)</span>
+                            </div>
+                            <div class="sold">
+                                <i class="fas fa-shopping-bag"></i> 3.2rb terjual
+                            </div>
+                        </div>
+                        <button class="product-btn" onclick="openBuyModal('ff', 'Membership', 65000, 60000, 'ff', event)">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="product-image ff">
+                        <i class="fas fa-fire"></i>
+                        <span class="discount-badge">-10%</span>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">FREE FIRE</div>
+                        <div class="product-name">Diamond 2500</div>
+                        <div class="product-desc">
+                            <i class="fas fa-check-circle"></i> 2500 Diamond + 200 Bonus<br>
+                            <i class="fas fa-check-circle"></i> 2x Voucher Skin<br>
+                            <i class="fas fa-check-circle"></i> Elite Pass
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 250.000</span>
+                            <span class="original-price">Rp 278.000</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>5.0 (2.3rb)</span>
+                            </div>
+                            <div class="sold">
+                                <i class="fas fa-shopping-bag"></i> 2.3rb terjual
+                            </div>
+                        </div>
+                        <button class="product-btn" onclick="openBuyModal('ff', 'Diamond 2500', 278000, 250000, 'ff', event)">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="product-image ff">
+                        <i class="fas fa-fire"></i>
+                        <span class="discount-badge">-12%</span>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">FREE FIRE</div>
+                        <div class="product-name">Diamond 5000</div>
+                        <div class="product-desc">
+                            <i class="fas fa-check-circle"></i> 5000 Diamond + 400 Bonus<br>
+                            <i class="fas fa-check-circle"></i> 3x Voucher Skin<br>
+                            <i class="fas fa-check-circle"></i> Elite Pass + Bundle
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 485.000</span>
+                            <span class="original-price">Rp 550.000</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.8 (1.1rb)</span>
+                            </div>
+                            <div class="sold">
+                                <i class="fas fa-shopping-bag"></i> 1.1rb terjual
+                            </div>
+                        </div>
+                        <button class="product-btn" onclick="openBuyModal('ff', 'Diamond 5000', 550000, 485000, 'ff', event)">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PUBG Products -->
+        <div id="pubgProducts" style="display: none;">
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="product-image pubg">
+                        <i class="fas fa-crosshairs"></i>
+                        <span class="discount-badge">-15%</span>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">PUBG MOBILE</div>
+                        <div class="product-name">UC 60</div>
+                        <div class="product-desc">
+                            <i class="fas fa-check-circle"></i> 60 UC + 5 Bonus<br>
+                            <i class="fas fa-check-circle"></i> Instant Delivery<br>
+                            <i class="fas fa-check-circle"></i> 100% Original
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 15.000</span>
+                            <span class="original-price">Rp 18.000</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>5.0 (3.2rb)</span>
+                            </div>
+                            <div class="sold">
+                                <i class="fas fa-shopping-bag"></i> 3.2rb terjual
+                            </div>
+                        </div>
+                        <button class="product-btn" onclick="openBuyModal('pubg', 'UC 60', 18000, 15000, 'pubg', event)">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="product-image pubg">
+                        <i class="fas fa-crosshairs"></i>
+                        <span class="discount-badge">-12%</span>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">PUBG MOBILE</div>
+                        <div class="product-name">UC 300</div>
+                        <div class="product-desc">
+                            <i class="fas fa-check-circle"></i> 300 UC + 25 Bonus<br>
+                            <i class="fas fa-check-circle"></i> 1x Royal Pass<br>
+                            <i class="fas fa-check-circle"></i> Instant Delivery
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 70.000</span>
+                            <span class="original-price">Rp 80.000</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.9 (2.1rb)</span>
+                            </div>
+                            <div class="sold">
+                                <i class="fas fa-shopping-bag"></i> 2.1rb terjual
+                            </div>
+                        </div>
+                        <button class="product-btn" onclick="openBuyModal('pubg', 'UC 300', 80000, 70000, 'pubg', event)">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="product-image pubg">
+                        <i class="fas fa-crosshairs"></i>
+                        <span class="discount-badge">-10%</span>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">PUBG MOBILE</div>
+                        <div class="product-name">UC 1000</div>
+                        <div class="product-desc">
+                            <i class="fas fa-check-circle"></i> 1000 UC + 100 Bonus<br>
+                            <i class="fas fa-check-circle"></i> 3x Crate<br>
+                            <i class="fas fa-check-circle"></i> Priority Delivery
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 220.000</span>
+                            <span class="original-price">Rp 245.000</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>5.0 (1.5rb)</span>
+                            </div>
+                            <div class="sold">
+                                <i class="fas fa-shopping-bag"></i> 1.5rb terjual
+                            </div>
+                        </div>
+                        <button class="product-btn" onclick="openBuyModal('pubg', 'UC 1000', 245000, 220000, 'pubg', event)">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Valorant Products -->
+        <div id="valoProducts" style="display: none;">
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="product-image valo">
+                        <i class="fas fa-skull"></i>
+                        <span class="discount-badge">-10%</span>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">VALORANT</div>
+                        <div class="product-name">Valorant Points 475</div>
+                        <div class="product-desc">
+                            <i class="fas fa-check-circle"></i> 475 VP<br>
+                            <i class="fas fa-check-circle"></i> Instant Delivery<br>
+                            <i class="fas fa-check-circle"></i> 100% Original
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 45.000</span>
+                            <span class="original-price">Rp 50.000</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>5.0 (1.8rb)</span>
+                            </div>
+                            <div class="sold">
+                                <i class="fas fa-shopping-bag"></i> 1.8rb terjual
+                            </div>
+                        </div>
+                        <button class="product-btn" onclick="openBuyModal('valo', 'VP 475', 50000, 45000, 'valo', event)">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="product-image valo">
+                        <i class="fas fa-skull"></i>
+                        <span class="discount-badge">-8%</span>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">VALORANT</div>
+                        <div class="product-name">Valorant Points 1000</div>
+                        <div class="product-desc">
+                            <i class="fas fa-check-circle"></i> 1000 VP + 50 Bonus<br>
+                            <i class="fas fa-check-circle"></i> Instant Delivery<br>
+                            <i class="fas fa-check-circle"></i> 100% Original
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 92.000</span>
+                            <span class="original-price">Rp 100.000</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.9 (2.3rb)</span>
+                            </div>
+                            <div class="sold">
+                                <i class="fas fa-shopping-bag"></i> 2.3rb terjual
+                            </div>
+                        </div>
+                        <button class="product-btn" onclick="openBuyModal('valo', 'VP 1000', 100000, 92000, 'valo', event)">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COD Products -->
+        <div id="codProducts" style="display: none;">
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="product-image cod">
+                        <i class="fas fa-bomb"></i>
+                        <span class="discount-badge">-12%</span>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">CALL OF DUTY</div>
+                        <div class="product-name">CP 100</div>
+                        <div class="product-desc">
+                            <i class="fas fa-check-circle"></i> 100 CP + 10 Bonus<br>
+                            <i class="fas fa-check-circle"></i> Instant Delivery<br>
+                            <i class="fas fa-check-circle"></i> 100% Original
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 22.000</span>
+                            <span class="original-price">Rp 25.000</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>5.0 (1.2rb)</span>
+                            </div>
+                            <div class="sold">
+                                <i class="fas fa-shopping-bag"></i> 1.2rb terjual
+                            </div>
+                        </div>
+                        <button class="product-btn" onclick="openBuyModal('cod', 'CP 100', 25000, 22000, 'cod', event)">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="product-image cod">
+                        <i class="fas fa-bomb"></i>
+                        <span class="discount-badge">-10%</span>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">CALL OF DUTY</div>
+                        <div class="product-name">CP 500</div>
+                        <div class="product-desc">
+                            <i class="fas fa-check-circle"></i> 500 CP + 50 Bonus<br>
+                            <i class="fas fa-check-circle"></i> 1x Battle Pass<br>
+                            <i class="fas fa-check-circle"></i> Instant Delivery
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 108.000</span>
+                            <span class="original-price">Rp 120.000</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.9 (900)</span>
+                            </div>
+                            <div class="sold">
+                                <i class="fas fa-shopping-bag"></i> 900 terjual
+                            </div>
+                        </div>
+                        <button class="product-btn" onclick="openBuyModal('cod', 'CP 500', 120000, 108000, 'cod', event)">
+                            <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="section-header" data-aos="fade-up">
+            <div class="section-badge">KEUNGGULAN</div>
+            <h2 class="section-title">Mengapa <span>Kami?</span></h2>
+            <p class="section-subtitle">Pelayanan terbaik dengan berbagai keunggulan</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3>Proses Cepat</h3>
+                <p>Top up langsung masuk kurang dari 5 menit</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Aman Terpercaya</h3>
+                <p>Data terenkripsi dan 100% aman</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3>Support 24 Jam</h3>
+                <p>Customer service selalu siap membantu</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="feature-icon">
+                    <i class="fas fa-wallet"></i>
+                </div>
+                <h3>Banyak Metode</h3>
+                <p>Transfer bank, e-wallet, hingga retail</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="section-header" data-aos="fade-up">
+            <div class="section-badge">TESTIMONIALS</div>
+            <h2 class="section-title">Apa Kata <span>Mereka?</span></h2>
+            <p class="section-subtitle">Pengalaman customer yang sudah top up di DANN STORE</p>
+        </div>
+
+        <div class="testimonials-slider swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide testimonial-slide">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">"Top up di DANN STORE selalu cepat dan murah. Udah 5x top up ga pernah error. Recomended banget!"</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">RA</div>
+                            <div class="author-info">
+                                <h4>Rafi Ahmad</h4>
+                                <p>Mobile Legends Player</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide testimonial-slide">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">"Pelayanan ramah, proses cepet, harga murah. Ini jadi langganan aku top up Free Fire. Mantul!"</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">DN</div>
+                            <div class="author-info">
+                                <h4>Dinda Novia</h4>
+                                <p>Free Fire Player</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide testimonial-slide">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">"Baru pertama kali coba, langsung puas. Diamond masuk kurang dari 2 menit. Thanks DANN STORE!"</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">AR</div>
+                            <div class="author-info">
+                                <h4>Andika Putra</h4>
+                                <p>PUBG Player</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <div class="section-header" data-aos="fade-up">
+            <div class="section-badge">FAQ</div>
+            <h2 class="section-title">Pertanyaan <span>Umum</span></h2>
+            <p class="section-subtitle">Temukan jawaban dari pertanyaan yang sering diajukan</p>
+        </div>
+
+        <div class="faq-grid">
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>Bagaimana cara top up di DANN STORE?</span>
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    Pilih game yang ingin di top up, pilih nominal, masukkan ID game, pilih metode pembayaran, lakukan pembayaran, dan diamond akan masuk otomatis.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>Berapa lama proses top up?</span>
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    Proses top up biasanya kurang dari 5 menit setelah pembayaran berhasil. Namun bisa lebih cepat jika sistem sedang lancar.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>Apa saja metode pembayaran yang tersedia?</span>
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    Kami menerima pembayaran melalui Transfer Bank (BCA, BRI, Mandiri), E-Wallet (DANA, OVO, GoPay), dan Alfamart/Indomaret.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>Apakah aman top up di DANN STORE?</span>
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    100% aman! Data kamu terenkripsi dan kami sudah dipercaya oleh 50.000+ customer. Garansi uang kembali jika terjadi masalah.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>Bagaimana jika diamond tidak masuk?</span>
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    Hubungi customer service kami segera melalui WhatsApp atau email. Kami akan bantu proses refund atau top up ulang.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>Apakah ada minimal pembelian?</span>
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    Tidak ada minimal pembelian! Kamu bisa top up mulai dari Rp 10.000.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="section-header" data-aos="fade-up">
+            <div class="section-badge">KONTAK</div>
+            <h2 class="section-title">Hubungi <span>Kami</span></h2>
+            <p class="section-subtitle">Ada pertanyaan? Silakan hubungi kami kapan saja</p>
+        </div>
+
+        <div class="contact-container">
+            <div class="contact-info" data-aos="fade-right">
+                <h3>Mari Bicara</h3>
+                <p>Tim customer service kami siap membantu 24 jam sehari, 7 hari seminggu. Jangan ragu untuk menghubungi kami.</p>
+                
+                <div class="contact-details">
+                    <div class="contact-detail">
+                        <i class="fab fa-whatsapp"></i>
+                        <a href="https://wa.me/6289616331000" target="_blank">+62 896-1633-1000</a>
+                    </div>
+                    <div class="contact-detail">
+                        <i class="far fa-envelope"></i>
+                        <a href="mailto:d39349303@gmail.com">d39349303@gmail.com</a>
+                    </div>
+                    <div class="contact-detail">
+                        <i class="fab fa-instagram"></i>
+                        <a href="https://instagram.com/dan.azdn" target="_blank">@dan.azdn</a>
+                    </div>
+                </div>
+
+                <div class="contact-social">
+                    <a href="https://wa.me/6289616331000" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a href="mailto:d39349303@gmail.com"><i class="far fa-envelope"></i></a>
+                    <a href="https://instagram.com/dan.azdn" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="contact-form" data-aos="fade-left">
+                <form id="contactForm" onsubmit="handleContact(event)">
+                    <div class="form-group">
+                        <input type="text" placeholder="Nama Lengkap" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Subject">
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Pesan..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-paper-plane"></i> Kirim Pesan
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-about">
+                <h3>DANN STORE</h3>
+                <p>Premium game store dengan pelayanan terbaik. Top up game termurah dan tercepat se-Indonesia.</p>
+                <div class="footer-social">
+                    <a href="https://wa.me/6289616331000" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a href="mailto:d39349303@gmail.com"><i class="far fa-envelope"></i></a>
+                    <a href="https://instagram.com/dan.azdn" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#howto">How to Order</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Games</h4>
+                <ul>
+                    <li><a href="#" onclick="switchGame('ml')">Mobile Legends</a></li>
+                    <li><a href="#" onclick="switchGame('ff')">Free Fire</a></li>
+                    <li><a href="#" onclick="switchGame('pubg')">PUBG Mobile</a></li>
+                    <li><a href="#" onclick="switchGame('valo')">Valorant</a></li>
+                    <li><a href="#" onclick="switchGame('cod')">Call of Duty</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-newsletter">
+                <h4>Newsletter</h4>
+                <p>Dapatkan info promo terbaru langsung di email kamu</p>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Email kamu">
+                    <button><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 DANN STORE. All rights reserved. Made with <i class="fas fa-heart" style="color: #ff3366;"></i> for gamers</p>
+        </div>
+    </footer>
+
+    <!-- Buy Modal -->
+    <div class="modal-overlay" id="buyModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <div class="modal-title">Complete Your Order</div>
+                <div class="modal-close" onclick="closeBuyModal()"><i class="fas fa-times"></i></div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-gamepad"></i> Game ID
+                    </label>
+                    <input type="text" class="form-control" id="gameId" placeholder="Contoh: 123456789 (wajib)">
+                    <small style="color: var(--text-muted);">Cek ID game di profil kamu</small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-server"></i> Pilih Server
+                    </label>
+                    <div class="server-grid" id="serverGrid" style="display: grid; grid-template-columns: repeat(2,1fr); gap: 0.5rem;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-user"></i> Nickname (Opsional)
+                    </label>
+                    <input type="text" class="form-control" id="nickname" placeholder="Masukkan nickname">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-credit-card"></i> Metode Pembayaran
+                    </label>
+                    <div class="payment-grid" id="paymentGrid" style="display: grid; grid-template-columns: repeat(3,1fr); gap: 0.5rem;"></div>
+                </div>
+
+                <div class="total-section" style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>Subtotal</span>
+                        <span id="displayPrice">Rp 0</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>Biaya Admin</span>
+                        <span>Rp 1.000</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: 700; color: var(--primary); margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed var(--border);">
+                        <span>Total</span>
+                        <span id="grandTotal">Rp 0</span>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="processOrder()" style="width: 100%;">
+                    <i class="fas fa-shopping-cart"></i> Tambah ke Keranjang
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Receipt Modal -->
+    <div class="modal-overlay" id="receiptModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <div class="modal-title">Payment Receipt</div>
+                <div class="modal-close" onclick="closeReceipt()"><i class="fas fa-times"></i></div>
+            </div>
+            <div class="modal-body">
+                <div class="receipt" id="receipt" style="padding: 1rem;"></div>
+                <button class="btn btn-primary" onclick="downloadReceipt()" style="width: 100%; margin-top: 1rem;">
+                    <i class="fas fa-download"></i> Download Receipt
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="modal-overlay" id="cartModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <div class="modal-title">Shopping Cart</div>
+                <div class="modal-close" onclick="closeCart()"><i class="fas fa-times"></i></div>
+            </div>
+            <div class="modal-body">
+                <div class="cart-items" id="cartItems"></div>
+                
+                <div class="cart-total">
+                    <div class="cart-total-row">
+                        <span>Total</span>
+                        <span id="cartTotal">Rp 0</span>
+                    </div>
+                </div>
+
+                <div class="checkout-form">
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-credit-card"></i> Pilih Metode Pembayaran
+                        </label>
+                        <div class="payment-methods">
+                            <div class="payment-method" onclick="selectCheckoutPayment(this, 'bca')">
+                                <i class="fas fa-university"></i>
+                                <span>BCA</span>
+                            </div>
+                            <div class="payment-method" onclick="selectCheckoutPayment(this, 'dana')">
+                                <i class="fas fa-wallet"></i>
+                                <span>DANA</span>
+                            </div>
+                            <div class="payment-method" onclick="selectCheckoutPayment(this, 'ovo')">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>OVO</span>
+                            </div>
+                            <div class="payment-method" onclick="selectCheckoutPayment(this, 'gopay')">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>GoPay</span>
+                            </div>
+                            <div class="payment-method" onclick="selectCheckoutPayment(this, 'alfamart')">
+                                <i class="fas fa-store"></i>
+                                <span>Alfamart</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="checkoutCart()" style="width: 100%;">
+                    <i class="fas fa-shopping-bag"></i> Checkout Sekarang
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        // ===== INITIALIZATION =====
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Swiper initialization
+        new Swiper('.testimonials-slider', {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 2,
+                },
+                1024: {
+                    slidesPerView: 3,
+                },
+            },
+        });
+
+        // ===== LOADING SCREEN =====
+        window.addEventListener('load', function() {
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 10;
+                document.getElementById('loadingProgress').style.width = progress + '%';
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        document.getElementById('loadingScreen').classList.add('fade-out');
+                    }, 500);
+                }
+            }, 200);
+        });
+
+        // ===== NAVBAR SCROLL EFFECT =====
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            // Back to top button
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 500) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+
+            // Active nav link
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            sections.forEach(section => {
+                const top = section.offsetTop - 100;
+                const bottom = top + section.offsetHeight;
+                const scroll = window.scrollY;
+                
+                if (scroll >= top && scroll < bottom) {
+                    const id = section.getAttribute('id');
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === '#' + id) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        });
+
+        // ===== HERO PARTICLES =====
+        function createParticles() {
+            const particlesContainer = document.getElementById('heroParticles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'hero-particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // ===== MOBILE MENU =====
+        function toggleMobileMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        // ===== SCROLL TO TOP =====
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ===== DATA =====
+        let cart = [];
+        let currentGame = 'ml';
+        let currentProduct = {};
+        let orders = JSON.parse(localStorage.getItem('orders')) || [];
+        let selectedCheckoutPayment = '';
+
+        const servers = {
+            ml: [
+                { id: '2250', name: 'Original Server' },
+                { id: '2300', name: 'Asia Server' },
+                { id: '2350', name: 'Europe Server' },
+                { id: '2400', name: 'America Server' }
+            ],
+            ff: [
+                { id: '1001', name: 'Indonesia' },
+                { id: '1002', name: 'Singapore' },
+                { id: '1003', name: 'Malaysia' },
+                { id: '1004', name: 'Thailand' }
+            ],
+            pubg: [
+                { id: '701', name: 'Asia' },
+                { id: '702', name: 'Europe' },
+                { id: '703', name: 'America' }
+            ],
+            valo: [
+                { id: 'AP', name: 'Asia Pacific' },
+                { id: 'EU', name: 'Europe' },
+                { id: 'NA', name: 'North America' }
+            ],
+            cod: [
+                { id: 'Garena', name: 'Garena' },
+                { id: 'Global', name: 'Global' }
+            ]
+        };
+
+        const payments = [
+            { id: 'bca', name: 'BCA', icon: 'fa-university' },
+            { id: 'bri', name: 'BRI', icon: 'fa-university' },
+            { id: 'mandiri', name: 'Mandiri', icon: 'fa-university' },
+            { id: 'dana', name: 'DANA', icon: 'fa-wallet' },
+            { id: 'ovo', name: 'OVO', icon: 'fa-mobile-alt' },
+            { id: 'gopay', name: 'GoPay', icon: 'fa-mobile-alt' }
+        ];
+
+        // ===== FUNCTIONS =====
+        function switchGame(game) {
+            currentGame = game;
+            document.querySelectorAll('.game-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            document.getElementById('mlProducts').style.display = game === 'ml' ? 'block' : 'none';
+            document.getElementById('ffProducts').style.display = game === 'ff' ? 'block' : 'none';
+            document.getElementById('pubgProducts').style.display = game === 'pubg' ? 'block' : 'none';
+            document.getElementById('valoProducts').style.display = game === 'valo' ? 'block' : 'none';
+            document.getElementById('codProducts').style.display = game === 'cod' ? 'block' : 'none';
+        }
+
+        function openBuyModal(game, itemName, originalPrice, price, gameCode, e) {
+            e.stopPropagation();
+            currentProduct = { game, itemName, originalPrice, price, gameCode };
+            
+            document.getElementById('displayPrice').innerText = `Rp ${price.toLocaleString()}`;
+            document.getElementById('grandTotal').innerText = `Rp ${(price + 1000).toLocaleString()}`;
+            
+            // Render servers
+            const serverGrid = document.getElementById('serverGrid');
+            serverGrid.innerHTML = '';
+            servers[game].forEach(server => {
+                const div = document.createElement('div');
+                div.className = 'server-option';
+                div.style.cssText = 'padding: 0.8rem; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 10px; text-align: center; cursor: pointer; transition: 0.3s;';
+                div.innerHTML = `${server.id}<br><small>${server.name}</small>`;
+                div.onclick = () => selectServer(div, server.id);
+                serverGrid.appendChild(div);
+            });
+
+            // Render payments
+            const paymentGrid = document.getElementById('paymentGrid');
+            paymentGrid.innerHTML = '';
+            payments.forEach(payment => {
+                const div = document.createElement('div');
+                div.className = 'payment-option';
+                div.style.cssText = 'padding: 0.8rem; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 10px; text-align: center; cursor: pointer; transition: 0.3s;';
+                div.innerHTML = `<i class="fas ${payment.icon}"></i><br><small>${payment.name}</small>`;
+                div.onclick = () => selectPayment(div, payment.id);
+                paymentGrid.appendChild(div);
+            });
+
+            document.getElementById('buyModal').classList.add('active');
+        }
+
+        let selectedServer = '';
+        let selectedPayment = '';
+
+        function selectServer(element, serverId) {
+            document.querySelectorAll('.server-option').forEach(el => {
+                el.style.background = 'rgba(0,0,0,0.3)';
+                el.style.borderColor = 'var(--border)';
+            });
+            element.style.background = 'var(--primary)';
+            element.style.color = 'var(--dark)';
+            element.style.borderColor = 'var(--primary)';
+            selectedServer = serverId;
+        }
+
+        function selectPayment(element, paymentId) {
+            document.querySelectorAll('.payment-option').forEach(el => {
+                el.style.background = 'rgba(0,0,0,0.3)';
+                el.style.borderColor = 'var(--border)';
+            });
+            element.style.background = 'var(--primary)';
+            element.style.color = 'var(--dark)';
+            element.style.borderColor = 'var(--primary)';
+            selectedPayment = paymentId;
+        }
+
+        function closeBuyModal() {
+            document.getElementById('buyModal').classList.remove('active');
+            document.getElementById('gameId').value = '';
+            document.getElementById('nickname').value = '';
+            selectedServer = '';
+            selectedPayment = '';
+        }
+
+        function processOrder() {
+            const gameId = document.getElementById('gameId').value;
+            const nickname = document.getElementById('nickname').value;
+            
+            if (!gameId) {
+                showToast('ID Game harus diisi!', true);
+                return;
+            }
+            if (!selectedServer) {
+                showToast('Pilih server dulu bang!', true);
+                return;
+            }
+            if (!selectedPayment) {
+                showToast('Pilih metode pembayaran!', true);
+                return;
+            }
+
+            cart.push({
+                game: currentProduct.game,
+                itemName: currentProduct.itemName,
+                price: currentProduct.price,
+                gameId: gameId,
+                server: selectedServer,
+                nickname: nickname || '-',
+                payment: selectedPayment,
+                date: new Date().toISOString()
+            });
+
+            updateCart();
+            showToast(`✅ ${currentProduct.itemName} ditambahkan ke keranjang!`);
+            closeBuyModal();
+        }
+
+        function updateCart() {
+            document.getElementById('cartCount').innerText = cart.length;
+            
+            const cartItems = document.getElementById('cartItems');
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p style="text-align: center; padding: 2rem; color: var(--text-muted);">Keranjang masih kosong</p>';
+            } else {
+                let html = '';
+                let total = 0;
+                
+                cart.forEach((item, index) => {
+                    total += item.price;
+                    html += `
+                        <div class="cart-item">
+                            <div class="cart-item-info">
+                                <h4>${item.itemName}</h4>
+                                <p>ID: ${item.gameId} | Server: ${item.server}</p>
+                            </div>
+                            <div style="display: flex; align-items: center;">
+                                <span class="cart-item-price">Rp ${item.price.toLocaleString()}</span>
+                                <span class="cart-item-remove" onclick="removeFromCart(${index})">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                cartItems.innerHTML = html;
+                document.getElementById('cartTotal').innerText = `Rp ${total.toLocaleString()}`;
+            }
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+            showToast('Item dihapus dari keranjang');
+        }
+
+        function openCart() {
+            updateCart();
+            document.getElementById('cartModal').classList.add('active');
+        }
+
+        function closeCart() {
+            document.getElementById('cartModal').classList.remove('active');
+        }
+
+        function selectCheckoutPayment(element, payment) {
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            selectedCheckoutPayment = payment;
+        }
+
+        function checkoutCart() {
+            if (cart.length === 0) {
+                showToast('Keranjang masih kosong!', true);
+                return;
+            }
+
+            if (!selectedCheckoutPayment) {
+                showToast('Pilih metode pembayaran!', true);
+                return;
+            }
+
+            const orderNumber = 'INV/' + new Date().getTime() + '/' + Math.random().toString(36).substring(7).toUpperCase();
+            
+            let items = '';
+            let total = 0;
+            
+            cart.forEach(item => {
+                total += item.price;
+                items += `
+                    <div class="receipt-row">
+                        <span class="receipt-label">${item.itemName}</span>
+                        <span class="receipt-value">Rp ${item.price.toLocaleString()}</span>
+                    </div>
+                `;
+            });
+
+            document.getElementById('receipt').innerHTML = `
+                <div class="receipt-header">
+                    <h3>DANN STORE</h3>
+                    <p>Payment Receipt</p>
+                </div>
+                <div class="receipt-details">
+                    <div class="receipt-row">
+                        <span class="receipt-label">Order Number</span>
+                        <span class="receipt-value">${orderNumber}</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="receipt-label">Date</span>
+                        <span class="receipt-value">${new Date().toLocaleString()}</span>
+                    </div>
+                    ${items}
+                    <div class="receipt-row">
+                        <span class="receipt-label">Admin Fee</span>
+                        <span class="receipt-value">Rp 1.000</span>
+                    </div>
+                    <div class="receipt-row" style="font-weight: 700;">
+                        <span class="receipt-label">TOTAL</span>
+                        <span class="receipt-value">Rp ${(total + 1000).toLocaleString()}</span>
+                    </div>
+                </div>
+                <div class="receipt-footer">
+                    <p>Payment Method: ${selectedCheckoutPayment.toUpperCase()}</p>
+                    <p>Status: Menunggu Pembayaran</p>
+                    <p>Save this receipt as proof of payment</p>
+                </div>
+            `;
+
+            orders.push({
+                orderNumber,
+                items: cart,
+                total: total + 1000,
+                date: new Date().toISOString(),
+                status: 'pending',
+                paymentMethod: selectedCheckoutPayment
+            });
+            localStorage.setItem('orders', JSON.stringify(orders));
+
+            cart = [];
+            updateCart();
+            closeCart();
+            
+            document.getElementById('receiptModal').classList.add('active');
+            showToast('✅ Checkout berhasil! Cek struk pembayaran');
+        }
+
+        function closeReceipt() {
+            document.getElementById('receiptModal').classList.remove('active');
+        }
+
+        function downloadReceipt() {
+            const receipt = document.getElementById('receipt').innerText;
+            const blob = new Blob([receipt], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `receipt_${new Date().getTime()}.txt`;
+            a.click();
+            showToast('Struk berhasil didownload');
+        }
+
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').innerText = message;
+            
+            if (isError) {
+                toast.classList.add('error');
+                toast.querySelector('i').className = 'fas fa-exclamation-circle';
+            } else {
+                toast.classList.remove('error');
+                toast.querySelector('i').className = 'fas fa-check-circle';
+            }
+            
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function toggleFaq(element) {
+            element.classList.toggle('active');
+        }
+
+        function handleContact(e) {
+            e.preventDefault();
+            showToast('Pesan berhasil dikirim! Kami akan segera merespon.');
+            e.target.reset();
+        }
+
+        // Close modals on outside click
+        window.onclick = function(event) {
+            const buyModal = document.getElementById('buyModal');
+            const cartModal = document.getElementById('cartModal');
+            const receiptModal = document.getElementById('receiptModal');
+            
+            if (event.target === buyModal) closeBuyModal();
+            if (event.target === cartModal) closeCart();
+            if (event.target === receiptModal) closeReceipt();
+        }
+    </script>
+</body>
+</html>
